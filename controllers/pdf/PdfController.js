@@ -5,7 +5,10 @@ const zipdir = require('zip-dir');
 
 const dir = `./cv-${new Date()}`;
 let amqpConn = null;
-let messageCount = 0;
+
+const userData = require('../../users.json')
+let messageCount = userData.length;
+
 let pubChannel = null;
 const routingKey = 'jobs';
 const offlinePubQueue = [];
@@ -100,8 +103,6 @@ class PdfController {
 
             ch.prefetch(10);
             ch.assertQueue(routingKey, { durable: true }, function(err, _ok) {
-                messageCount = _ok.messageCount
-
                 if (PdfController.closeOnErr(err)) return;
                 ch.consume(routingKey, processMsg, { noAck: false });
                 console.log("Worker is started");
@@ -128,7 +129,7 @@ class PdfController {
         --messageCount
         if (messageCount === 0) {
             PdfController.zipCV();
-            // PdfController.removeDirectory();
+            PdfController.removeDirectory();
         }
         cb(true);
     }
