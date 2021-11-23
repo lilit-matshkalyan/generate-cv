@@ -6,9 +6,14 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "amqplib": "^0.8.0",
     "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
-    "morgan": "~1.9.1"
+    "fs": "0.0.1-security",
+    "morgan": "~1.9.1",
+    "pdfmake": "^0.2.4",
+    "zip-dir": "^2.0.0"
   }
 }
